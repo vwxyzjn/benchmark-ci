@@ -112,7 +112,7 @@ jobs:
       - name: Upload images
         run: echo "TAG=no-tag-1-gb906f3d" >> $GITHUB_ENV
       - name: Upload images
-        run: bash plot.sh
+        run: bash benchmark/plot.sh
 
       # send message to PR
       - name: Setup Node.js 16

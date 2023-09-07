@@ -48,12 +48,15 @@ def run_experiment(command: str):
 def autotag() -> str:
     wandb_tag = ""
     print("autotag feature is enabled")
+    git_tag = ""
     try:
         git_tag = subprocess.check_output(["git", "describe", "--tags"]).decode("ascii").strip()
-        wandb_tag = f"{git_tag}"
         print(f"identified git tag: {git_tag}")
     except subprocess.CalledProcessError:
         return wandb_tag
+    if len(git_tag) == 0:
+        git_tag = "no-git-tag"
+    wandb_tag = f"{git_tag}"
 
     git_commit = subprocess.check_output(["git", "rev-parse", "--verify", "HEAD"]).decode("ascii").strip()
     try:

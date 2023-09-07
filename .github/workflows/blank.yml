@@ -108,9 +108,9 @@ jobs:
 
       # benchmark tests
       - name: Install core dependencies
-        run: poetry install --no-root
+        run: pip install openrlbenchmark==0.2.1a5 huggingface-hub tyro
       - name: Upload images
-        run: echo "TAG=no-tag-1-gb906f3d >> $GITHUB_ENV
+        run: echo "TAG=no-tag-1-gb906f3d" >> $GITHUB_ENV
       - name: Upload images
         run: bash plot.sh
 

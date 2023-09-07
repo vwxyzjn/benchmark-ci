@@ -45,7 +45,7 @@ jobs:
       - name: Install core dependencies
         run: poetry install --no-root
       - name: Downgrade setuptools
-        run: WANDB_TAGS=bash benchmark.sh
+        run: bash benchmark.sh
 
       # send message to PR
       - name: Setup Node.js 16

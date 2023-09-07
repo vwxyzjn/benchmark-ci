@@ -52,10 +52,15 @@ def autotag() -> str:
     try:
         git_tag = subprocess.check_output(["git", "describe", "--tags"]).decode("ascii").strip()
         print(f"identified git tag: {git_tag}")
-    except subprocess.CalledProcessError:
-        return wandb_tag
-    if len(git_tag) == 0:
-        git_tag = "no-git-tag"
+    except subprocess.CalledProcessError as e:
+        print(e)
+    try:
+        count = int(subprocess.check_output(["git", "rev-list", "--count", "HEAD"]).decode("ascii").strip())
+        hash = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"]).decode("ascii").strip()
+        git_tag = f"no-tag-{count}-g{hash}"
+        print(f"identified git tag: {git_tag}")
+    except subprocess.CalledProcessError as e:
+        print(e)
     wandb_tag = f"{git_tag}"
 
     git_commit = subprocess.check_output(["git", "rev-parse", "--verify", "HEAD"]).decode("ascii").strip()
@@ -87,7 +92,7 @@ if __name__ == "__main__":
                 os.environ["WANDB_TAGS"] = ",".join([existing_wandb_tag, wandb_tag])
             else:
                 os.environ["WANDB_TAGS"] = wandb_tag
-
+    print("Tags are", os.environ.get("WANDB_TAGS", ""))
     commands = []
     for seed in range(0, args.num_seeds):
         commands += [" ".join([args.command, "--seed", str(args.start_seed + seed)])]

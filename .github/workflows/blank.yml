@@ -60,7 +60,7 @@ jobs:
 
       # classic control tests
       - name: Install core dependencies
-        run: poetry install
+        run: poetry install --no-root
       - name: Downgrade setuptools
         run: bash benchmark.sh
 

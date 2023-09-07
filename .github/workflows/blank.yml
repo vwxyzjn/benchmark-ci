@@ -1,0 +1,18 @@
+name: Run CI via Comment
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  check_comment:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check for Command
+      run: |
+        comment="${{ github.event.comment.body }}"
+        if echo "$comment" | grep -q "@mybot run ci"; then
+          echo "Command detected! Running CI..."
+          # Run subsequent CI steps or call another workflow/job
+        else
+          echo "Command not detected. Skipping."
+          exit 78

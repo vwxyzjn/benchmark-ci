@@ -10,8 +10,8 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        python-version: [3.8.5]
-        poetry-version: [1.4]
+        python-version: [3.8]
+        poetry-version: [1.3]
         os: [self-hosted]
 
     name: Deploy

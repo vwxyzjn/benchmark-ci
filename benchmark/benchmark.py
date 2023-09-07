@@ -6,6 +6,8 @@ import subprocess
 import uuid
 from distutils.util import strtobool
 
+import requests
+
 
 def parse_args():
     # fmt: off
@@ -43,8 +45,45 @@ def run_experiment(command: str):
     assert return_code == 0
 
 
+def autotag() -> str:
+    wandb_tag = ""
+    print("autotag feature is enabled")
+    try:
+        git_tag = subprocess.check_output(["git", "describe", "--tags"]).decode("ascii").strip()
+        wandb_tag = f"{git_tag}"
+        print(f"identified git tag: {git_tag}")
+    except subprocess.CalledProcessError:
+        return wandb_tag
+
+    git_commit = subprocess.check_output(["git", "rev-parse", "--verify", "HEAD"]).decode("ascii").strip()
+    try:
+        # try finding the pull request number on github
+        prs = requests.get(
+            f"https://api.github.com/search/issues?q=repo:vwxyzjn/lm-human-preference-details+is:pr+{git_commit}"
+        )
+        if prs.status_code == 200:
+            prs = prs.json()
+            if len(prs["items"]) > 0:
+                pr = prs["items"][0]
+                pr_number = pr["number"]
+                wandb_tag += f",pr-{pr_number}"
+        print(f"identified github pull request: {pr_number}")
+    except Exception as e:
+        print(e)
+
+    return wandb_tag
+
+
 if __name__ == "__main__":
     args = parse_args()
+    if args.auto_tag:
+        existing_wandb_tag = os.environ.get("WANDB_TAGS", "")
+        wandb_tag = autotag()
+        if len(wandb_tag) > 0:
+            if len(existing_wandb_tag) > 0:
+                os.environ["WANDB_TAGS"] = ",".join([existing_wandb_tag, wandb_tag])
+            else:
+                os.environ["WANDB_TAGS"] = wandb_tag
 
     commands = []
     for seed in range(0, args.num_seeds):

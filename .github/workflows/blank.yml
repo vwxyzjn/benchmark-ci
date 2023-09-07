@@ -7,10 +7,17 @@ on:
 
 jobs:
   deploy:
+    strategy:
+      fail-fast: true
+      matrix:
+        python-version: [3.8]
+        poetry-version: [1.3]
+        os: [self-hosted]
+
     name: Deploy
     # Only run if it#s a PR and the comment contains /deploy
     if: github.event.issue.pull_request && contains(github.event.comment.body, '/deploy')
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Get branch of PR
@@ -29,16 +36,29 @@ jobs:
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
 
-      - name: Setup Node.js 16
-        uses: actions/setup-node@v3
+      - uses: actions/setup-python@v2
         with:
-          node-version: 16
+          python-version: ${{ matrix.python-version }}
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
 
       # Do the actual deployment (exit randomly with 0 or 1)
       - name: Deploy
         run: |
           echo "Deploying..."
-          exit $(($RANDOM%2))
+
+      # classic control tests
+      - name: Install core dependencies
+        run: poetry install
+      - name: Downgrade setuptools
+        run: bash benchmark.sh
+
+      - name: Setup Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
 
       - name: Add workflow result as comment on PR
         uses: actions/github-script@v6

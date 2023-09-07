@@ -36,6 +36,10 @@ jobs:
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
 
+      - name: Deploy
+        run: |
+          ls
+
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
@@ -43,6 +47,11 @@ jobs:
         uses: abatilo/actions-poetry@v2.0.0
         with:
           poetry-version: ${{ matrix.poetry-version }}
+
+
+      - name: Deploy
+        run: |
+          ls
 
       # Do the actual deployment (exit randomly with 0 or 1)
       - name: Deploy

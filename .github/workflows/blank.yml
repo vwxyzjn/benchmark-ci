@@ -127,7 +127,7 @@ jobs:
             const fs = require('fs');
             const path = require('path');
             
-            const artifactPath = 'benchmark/trl/$TAG'
+            const artifactPath = 'benchmark/trl/${process.env.TAG}'
             const imageFiles = fs.readdirSync(artifactPath).filter(file => file.endsWith('.png')); // Assuming PNGs. Adjust if needed.
             
             const name = '${{ github.workflow }}';

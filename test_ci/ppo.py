@@ -129,6 +129,9 @@ class Agent(nn.Module):
 if __name__ == "__main__":
     args = parse_args()
     run_name = f"{args.env_id}__{args.exp_name}__{args.seed}__{int(time.time())}"
+    device = torch.device("cuda" if torch.cuda.is_available() and args.cuda else "cpu")
+    print(device)
+    args.device = device
     if args.track:
         import wandb
 
@@ -153,7 +156,7 @@ if __name__ == "__main__":
     torch.manual_seed(args.seed)
     torch.backends.cudnn.deterministic = args.torch_deterministic
 
-    device = torch.device("cuda" if torch.cuda.is_available() and args.cuda else "cpu")
+
 
     # env setup
     envs = gym.vector.SyncVectorEnv(

@@ -1,5 +1,5 @@
 python benchmark/benchmark.py \
-    --command "poetry run python test_ci/ppo.py --total-timesteps 10000 --track" \
+    --command "poetry run python test_ci/ppo.py --track" \
     --num-seeds 5 \
     --start-seed 1 \
     --workers 10 \

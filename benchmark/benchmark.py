@@ -99,7 +99,7 @@ if __name__ == "__main__":
                 os.environ["WANDB_TAGS"] = ",".join([existing_wandb_tag, wandb_tag])
             else:
                 os.environ["WANDB_TAGS"] = wandb_tag
-    print("Tags are", os.environ.get("WANDB_TAGS", ""))
+    print("WANDB_TAGS: ", os.environ.get("WANDB_TAGS", ""))
     commands = []
     for seed in range(0, args.num_seeds):
         commands += [" ".join([args.command, "--seed", str(args.start_seed + seed)])]

@@ -3,20 +3,12 @@ import math
 import os
 import shlex
 import subprocess
+import time
 import uuid
 from distutils.util import strtobool
 
 from ghapi.all import GhApi
 import json
-
-# Create a GitHub API instance
-github_context = json.loads(os.environ['GITHUB_CONTEXT'])
-token = os.environ["PERSONAL_ACCESS_TOKEN_GITHUB"] # this needs to refreshed every 12 months
-status_message = f"COSTA BOT: Here are the benchmark results"
-body = status_message 
-repo = github_context["repository"]
-owner, repo = repo.split("/")
-api = GhApi(owner=owner, repo=repo, token=token)
 
 
 def run_experiment(command: str):
@@ -34,8 +26,20 @@ def run_experiment(command: str):
     return output.decode('utf-8').strip()
 
 FOLDER_STRING = os.environ.get("FOLDER_STRING", "")
+time.sleep(120) # wait for the benchmark to finish
 run_experiment("bash benchmark/plot.sh")
 folder = f"benchmark/trl/{FOLDER_STRING}"
+
+# Create a GitHub API instance
+github_context = json.loads(os.environ['GITHUB_CONTEXT'])
+token = os.environ["PERSONAL_ACCESS_TOKEN_GITHUB"] # this needs to refreshed every 12 months
+status_message = f"COSTA BOT: Here are the benchmark results"
+body = status_message 
+repo = github_context["repository"]
+owner, repo = repo.split("/")
+api = GhApi(owner=owner, repo=repo, token=token)
+
+
 host_url = "https://huggingface.co/datasets/trl-internal-testing/example-images/resolve/main/images/benchmark/{FOLDER_STRING}"
 # for each `.png` file in the folder, add it to the comment
 for file in os.listdir(folder):

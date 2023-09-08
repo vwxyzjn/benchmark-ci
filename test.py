@@ -14,4 +14,4 @@ body = status_message
 api = GhApi()
 
 # Create a comment on the issue
-api.issues.create_comment(issue_number=github_context["github.event.issue.number"], body=body)
+api.issues.create_comment(issue_number=github_context["github"]["event"]["issue"]["number"], body=body)

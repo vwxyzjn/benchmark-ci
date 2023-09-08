@@ -53,7 +53,9 @@ jobs:
         id: benchmark
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "job_ids=$(poetry run bash benchmark/benchmark.sh | grep 'Job ID' | awk '{print $NF}' | paste -sd: -)" >> $GITHUB_OUTPUT
+        run: |
+          job_ids=$(poetry run bash benchmark/benchmark.sh | grep 'Job ID' | awk '{print $NF}' | paste -sd: -)
+          echo "test=$job_ids" >> $GITHUB_OUTPUT
 
       # send message to PR
       - name: Setup Node.js 16

@@ -4,6 +4,7 @@ from ghapi.all import GhApi
 import json
 
 github_context = json.loads(os.environ['GITHUB_CONTEXT'])
+print(github_context)
 
 status_message = f": Here are the benchmark results"
 body = status_message 

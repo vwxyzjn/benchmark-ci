@@ -1,6 +1,6 @@
 python benchmark/benchmark.py \
     --command "poetry run python test_ci/ppo.py --track" \
-    --num-seeds 2 \
+    --num-seeds 1 \
     --start-seed 1 \
     --workers 10 \
     --slurm-nodes 1 \

@@ -186,6 +186,6 @@ jobs:
         run: pip install openrlbenchmark==0.2.1a5 huggingface-hub tyro ghapi
 
       - name: Run script with environment variable
-        run: python test.py
+        run: python benchmark/post_github_comment.py
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}

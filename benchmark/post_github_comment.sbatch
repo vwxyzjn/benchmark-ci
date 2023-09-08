@@ -4,4 +4,4 @@
 #SBATCH --ntasks=1
 #SBATCH --output=slurm/logs/%x_%j.out
 
-srun post_github_comment.py
+srun benchmark/post_github_comment.py

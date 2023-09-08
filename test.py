@@ -2,9 +2,9 @@ import os
 from pathlib import Path
 from ghapi.all import GhApi
 import json
-
+from rich.pretty import pprint
 github_context = json.loads(os.environ['GITHUB_CONTEXT'])
-
+pprint(github_context)
 
 
 status_message = f": Here are the benchmark results"

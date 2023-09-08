@@ -135,10 +135,10 @@ jobs:
             const success = '${{ job.status }}' === 'success';
             const statusMessage = `${name}: Here are the benchmark results`;
 
-            url_host = "https://huggingface.co/datasets/trl-internal-testing/example-images/blob/main/images/benchmark/"
+            url_host = "https://huggingface.co/datasets/trl-internal-testing/example-images/blob/main/images/benchmark"
             let body = statusMessage + "\n\n";
             for(const file of imageFiles) {
-              body += `![${file}]${url_host}/${file})\n\n`; // Replace URL-TO-YOUR-IMAGE-HOST with actual base URL.
+              body += `![${file}](${url_host}/${process.env.TAG}/${file})\n\n`; // Replace URL-TO-YOUR-IMAGE-HOST with actual base URL.
             }
 
             await github.rest.issues.createComment({

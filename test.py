@@ -16,4 +16,4 @@ owner, repo = repo.split("/")
 api = GhApi(owner=owner, repo=repo, token=github_context["token"])
 
 # Create a comment on the issue
-api.issues.create_comment(issue_number=github_context["github.event.issue.number"], body=body)
+api.issues.create_comment(issue_number=github_context["event"]["issue"]["number"], body=body)

@@ -11,7 +11,7 @@ status_message = f": Here are the benchmark results"
 body = status_message 
 
 # Create a GitHub API instance
-api = GhApi()
+api = GhApi(token=github_context["token"])
 
 # Create a comment on the issue
 api.issues.create_comment(issue_number=github_context["event"]["issue"]["number"], body=body)

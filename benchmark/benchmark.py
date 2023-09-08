@@ -40,9 +40,16 @@ def parse_args():
 def run_experiment(command: str):
     command_list = shlex.split(command)
     print(f"running {command}")
-    fd = subprocess.Popen(command_list)
-    return_code = fd.wait()
-    assert return_code == 0
+    
+    # Use subprocess.PIPE to capture the output
+    fd = subprocess.Popen(command_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output, errors = fd.communicate()
+    
+    return_code = fd.returncode
+    assert return_code == 0, f"Command failed with error: {errors.decode('utf-8')}"
+    
+    # Convert bytes to string and strip leading/trailing whitespaces
+    return output.decode('utf-8').strip()
 
 
 def autotag() -> str:
@@ -140,4 +147,5 @@ if __name__ == "__main__":
         slurm_path = os.path.join("slurm", f"{filename}.slurm")
         print(f"saving command in {slurm_path}")
         if args.workers > 0:
-            run_experiment(f"sbatch {slurm_path}")
+            job_id = run_experiment(f"sbatch --parsable {slurm_path}")
+            print(f"Job ID: {job_id}")

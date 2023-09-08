@@ -44,8 +44,13 @@ jobs:
       # benchmark tests
       - name: Install core dependencies
         run: poetry install --no-root
+      - name: Login
+        run: wandb login ${{ secrets.WANDB_API_KEY }} && huggingface-cli login --token ${{ secrets.HUGGING_FACE_HUB_TOKEN }} &&  bash benchmark/plot.sh
       - name: Run benchmark
-        run: bash benchmark.sh
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: bash benchmark_and_report.sh
+
 
       # send message to PR
       - name: Setup Node.js 16

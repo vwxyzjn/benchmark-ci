@@ -1,3 +1,4 @@
 benchmark/trl
 runs
 wandb
+slurm

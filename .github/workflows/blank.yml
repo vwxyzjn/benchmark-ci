@@ -47,11 +47,11 @@ jobs:
       - name: Install core dependencies
         run: poetry install --no-root
       - name: Login
-        run: wandb login ${{ secrets.WANDB_API_KEY }} && huggingface-cli login --token ${{ secrets.HUGGING_FACE_HUB_TOKEN }} &&  bash benchmark/plot.sh
+        run: poetry run wandb login ${{ secrets.WANDB_API_KEY }} && poetry run huggingface-cli login --token ${{ secrets.HUGGING_FACE_HUB_TOKEN }}
       - name: Run benchmark
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: bash benchmark_and_report.sh
+        run: poetry run bash benchmark_and_report.sh
 
 
       # send message to PR

@@ -56,7 +56,7 @@ jobs:
         run: |
           job_ids=$(poetry run bash benchmark/benchmark.sh | grep 'Job ID' | awk '{print $NF}' | paste -sd: -)
           echo "job_ids=$job_ids" >> $GITHUB_OUTPUT
-          poetry run pip ghapi
+          poetry run pip install ghapi
           job_ids=$job_ids poetry run bash benchmark/post.sh
 
       # send message to PR

@@ -43,6 +43,8 @@ jobs:
 
       # benchmark tests
       - name: Install core dependencies
+        run: ls
+      - name: Install core dependencies
         run: poetry install --no-root
       - name: Login
         run: wandb login ${{ secrets.WANDB_API_KEY }} && huggingface-cli login --token ${{ secrets.HUGGING_FACE_HUB_TOKEN }} &&  bash benchmark/plot.sh

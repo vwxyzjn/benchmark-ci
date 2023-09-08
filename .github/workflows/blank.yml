@@ -51,7 +51,7 @@ jobs:
       - name: Run benchmark
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: poetry run bash benchmark_and_report.sh
+        run: poetry run bash benchmark/benchmark_and_report.sh
 
 
       # send message to PR

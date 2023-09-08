@@ -52,7 +52,9 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
           PERSONAL_ACCESS_TOKEN_GITHUB: ${{ secrets.PERSONAL_ACCESS_TOKEN_GITHUB }}
-        run: poetry run bash benchmark/benchmark_and_report.sh
+        run: |
+          echo $PERSONAL_ACCESS_TOKEN_GITHUB
+          poetry run bash benchmark/benchmark_and_report.sh
 
       # send message to PR
       - name: Setup Node.js 16

@@ -12,7 +12,7 @@ body = status_message
 repo = github_context["repository"]
 owner, repo = repo.split("/")
 # Create a GitHub API instance
-api = GhApi(owner=owner, repo=repo, token=github_context["PERSONAL_ACCESS_TOKEN_GITHUB"])
+api = GhApi(owner=owner, repo=repo, token=os.environ["PERSONAL_ACCESS_TOKEN_GITHUB"])
 
 # Create a comment on the issue
 api.issues.create_comment(issue_number=github_context["event"]["issue"]["number"], body=body)

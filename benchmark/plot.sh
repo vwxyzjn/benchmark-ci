@@ -1,3 +1,5 @@
+echo "we deal with $TAGS_STRING"
+
 python -m openrlbenchmark.rlops_multi_metrics \
     --filters '?we=costa-huang&wpn=cleanrl&ceik=env_id&cen=exp_name&metrics=charts/episodic_return' \
         "ppo$TAGS_STRING" \

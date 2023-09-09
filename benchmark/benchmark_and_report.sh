@@ -21,4 +21,4 @@ done
 echo "TAGS_STRING: $TAGS_STRING"
 echo "FOLDER_STRING: $FOLDER_STRING"
 
-sbatch --dependency=afterany:$job_ids benchmark/post_github_comment.sbatch
+TAGS_STRING=$TAGS_STRING FOLDER_STRING=$FOLDER_STRING sbatch --dependency=afterany:$job_ids benchmark/post_github_comment.sbatch

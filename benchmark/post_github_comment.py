@@ -10,24 +10,7 @@ from distutils.util import strtobool
 from ghapi.all import GhApi
 import json
 
-
-def run_experiment(command: str):
-    command_list = shlex.split(command)
-    print(f"running {command}")
-    
-    # Use subprocess.PIPE to capture the output
-    fd = subprocess.Popen(command_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    output, errors = fd.communicate()
-    
-    return_code = fd.returncode
-    assert return_code == 0, f"Command failed with error: {errors.decode('utf-8')}"
-    
-    # Convert bytes to string and strip leading/trailing whitespaces
-    return output.decode('utf-8').strip()
-
 FOLDER_STRING = os.environ.get("FOLDER_STRING", "")
-time.sleep(120) # wait for the benchmark to finish
-run_experiment("bash benchmark/plot.sh")
 folder = f"benchmark/trl/{FOLDER_STRING}"
 
 # Create a GitHub API instance

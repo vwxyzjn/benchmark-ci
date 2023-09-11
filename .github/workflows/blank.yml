@@ -45,16 +45,16 @@ jobs:
       - name: Install core dependencies
         run: ls
       - name: Install core dependencies
-        run: poetry run pip install -r requirements.txt
+        run: pip install -r requirements.txt
       - name: Login
-        run: poetry run wandb login ${{ secrets.WANDB_API_KEY }} && poetry run huggingface-cli login --token ${{ secrets.HUGGING_FACE_HUB_TOKEN }}
+        run: wandb login ${{ secrets.WANDB_API_KEY }} && huggingface-cli login --token ${{ secrets.HUGGING_FACE_HUB_TOKEN }}
       - name: Run benchmark
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
           PERSONAL_ACCESS_TOKEN_GITHUB: ${{ secrets.PERSONAL_ACCESS_TOKEN_GITHUB }}
         run: |
           echo $PERSONAL_ACCESS_TOKEN_GITHUB
-          poetry run bash benchmark/benchmark_and_report.sh
+          bash benchmark/benchmark_and_report.sh
 
       # send message to PR
       - name: Setup Node.js 16
@@ -110,18 +110,14 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Run image
-        uses: abatilo/actions-poetry@v2.0.0
-        with:
-          poetry-version: ${{ matrix.poetry-version }}
 
       # benchmark tests
       - name: Install core dependencies
-        run: poetry run pip install openrlbenchmark==0.2.1a5 huggingface-hub tyro
+        run: pip install openrlbenchmark==0.2.1a5 huggingface-hub tyro
       - name: Upload images
         run: echo "TAG=no-tag-1-gb906f3d" >> $GITHUB_ENV
       - name: Upload images
-        run: poetry run wandb login ${{ secrets.WANDB_API_KEY }} && poetry run huggingface-cli login --token ${{ secrets.HUGGING_FACE_HUB_TOKEN }} &&  bash benchmark/plot.sh
+        run: wandb login ${{ secrets.WANDB_API_KEY }} && huggingface-cli login --token ${{ secrets.HUGGING_FACE_HUB_TOKEN }} &&  bash benchmark/plot.sh
 
       # send message to PR
       - name: Setup Node.js 16

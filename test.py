@@ -6,8 +6,8 @@ import json
 github_context = json.loads(os.environ['GITHUB_CONTEXT'])
 
 
-
-status_message = f": Here are the benchmark results"
+ 
+status_message = f": Here are the bench mark results"
 body = status_message 
 
 repo = github_context["repository"]

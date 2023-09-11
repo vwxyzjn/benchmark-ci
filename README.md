@@ -1,4 +1,4 @@
-# Benchark-CI
+# Benchmark-CI
 
 This is a project setting up automatic benchmark experiments with CI triggered by github comments.
 

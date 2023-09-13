@@ -14,7 +14,7 @@ function cleanup {
 }
 trap cleanup EXIT
 cp -r "$DIR" "$WORK_DIR"
-cd "$WORK_DIR"
+cd "$WORK_DIR/$(basename "$DIR")"
 
 
 #### Step 2: actual work starts:

@@ -144,12 +144,7 @@ if __name__ == "__main__":
             monitor_gym=True,
             save_code=True,
         )
-    import tempfile
-    temp_dir = tempfile.TemporaryDirectory()
-    print(f"temp_dir={temp_dir.name}")
-    temp_dir = tempfile.mkdtemp()
-    print(f"temp_dir={temp_dir}")
-    writer = SummaryWriter(temp_dir)
+    writer = SummaryWriter(f"runs/{run_name}")
     writer.add_text(
         "hyperparameters",
         "|param|value|\n|-|-|\n%s" % ("\n".join([f"|{key}|{value}|" for key, value in vars(args).items()])),
@@ -315,5 +310,3 @@ if __name__ == "__main__":
 
     envs.close()
     writer.close()
-    import shutil
-    shutil.rmtree(temp_dir)

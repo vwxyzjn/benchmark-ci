@@ -2,8 +2,7 @@
 # this is necessary because another github action job will remove
 # the entire directory, which slurm depends on.
 # https://stackoverflow.com/questions/4632028/how-to-create-a-temporary-directory
-# WORK_DIR=$(mktemp -d)
-WORKDIR=$PWD
+WORK_DIR=$(mktemp -d)
 cp -r "$PWD" "$WORK_DIR"
 cd "$WORK_DIR/$(basename "$PWD")"
 

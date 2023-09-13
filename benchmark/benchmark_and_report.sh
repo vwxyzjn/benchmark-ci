@@ -2,7 +2,8 @@
 # this is necessary because another github action job will remove
 # the entire directory, which slurm depends on.
 # https://stackoverflow.com/questions/4632028/how-to-create-a-temporary-directory
-WORK_DIR=$(mktemp -d)
+MY_SLURM_TMP_DIR=/fsx/costa/slurm_tmpdir
+WORK_DIR=`mktemp -d -p "$MY_SLURM_TMP_DIR"`
 cp -r "$PWD" "$WORK_DIR"
 cd "$WORK_DIR/$(basename "$PWD")"
 

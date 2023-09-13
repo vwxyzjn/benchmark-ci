@@ -6,7 +6,7 @@ Basically, we want to input a command in the issue like `/deploy` and our CI wil
 
 ![](static/demo.png)
 
-
+ 
 ## Basic design
 
 The process is as follows:

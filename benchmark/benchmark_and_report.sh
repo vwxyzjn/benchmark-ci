@@ -1,3 +1,23 @@
+#### Step 1: create a work directory:
+# this is necessary because another github action job will remove
+# the entire directory, which slurm depends on.
+# https://stackoverflow.com/questions/4632028/how-to-create-a-temporary-directory
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+WORK_DIR=`mktemp -d -p "$DIR"`
+if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
+  echo "Could not create temp dir"
+  exit 1
+fi
+function cleanup {      
+  rm -rf "$WORK_DIR"
+  echo "Deleted temp working directory $WORK_DIR"
+}
+trap cleanup EXIT
+cp -r "$DIR" "$WORK_DIR"
+cd "$WORK_DIR"
+
+
+#### Step 2: actual work starts:
 bash benchmark/benchmark.sh > output.txt
 
 # Extract Job IDs into an array

@@ -5,11 +5,8 @@
 
 ls -la
 pwd
-
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 WORK_DIR=$(mktemp -d)
-
-echo DIR: $DIR
+echo PWD: $PWD
 echo WORK_DIR: $WORK_DIR
 
 if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
@@ -21,7 +18,7 @@ function cleanup {
   echo "Deleted temp working directory $WORK_DIR"
 }
 trap cleanup EXIT
-cp -r "$DIR"/. "$WORK_DIR"
+cp -r "$PWD"/. "$WORK_DIR"
 cd $WORK_DIR
 
 ls -la

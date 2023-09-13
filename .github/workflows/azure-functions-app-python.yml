@@ -1,0 +1,16 @@
+on:
+  workflow_dispatch:
+    inputs:
+      pull_request_url:
+        description: 'URL of the pull request to run this workflow for'     
+        required: true
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Echo PR URL 
+      run: |
+        echo "Pull request URL is ${{ github.event.inputs.pull_request_url }}"

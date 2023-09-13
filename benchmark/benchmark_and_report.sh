@@ -17,8 +17,8 @@ function cleanup {
   echo "Deleted temp working directory $WORK_DIR"
 }
 trap cleanup EXIT
-cp -r "$DIR" "$WORK_DIR"
-cd "$WORK_DIR/$(basename "$DIR")"
+cp -r "$DIR"/. "$WORK_DIR"
+cd $WORK_DIR
 
 ls -la
 pwd

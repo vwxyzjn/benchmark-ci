@@ -16,6 +16,8 @@ trap cleanup EXIT
 cp -r "$DIR" "$WORK_DIR"
 cd "$WORK_DIR/$(basename "$DIR")"
 
+ls -la
+
 
 #### Step 2: actual work starts:
 bash benchmark/benchmark.sh > output.txt

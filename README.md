@@ -1,7 +1,7 @@
 # Benchmark-CI
 
 This is a project setting up automatic benchmark experiments with CI triggered by github comments.
-
+ 
 Basically, we want to input a command in the issue like `/deploy` and our CI will run trigger the benchmark experiments and report the results back to the issue, like this:
 
 ![](static/demo.png)

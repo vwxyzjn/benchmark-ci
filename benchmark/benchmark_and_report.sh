@@ -2,19 +2,14 @@
 # this is necessary because another github action job will remove
 # the entire directory, which slurm depends on.
 # https://stackoverflow.com/questions/4632028/how-to-create-a-temporary-directory
-WORK_DIR=$(mktemp -d)
+# WORK_DIR=$(mktemp -d)
+WORKDIR=$PWD
 if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
   echo "Could not create temp dir"
   exit 1
 fi
-function cleanup {      
-  rm -rf "$WORK_DIR"
-  echo "Deleted temp working directory $WORK_DIR"
-}
-trap cleanup EXIT
 cp -r "$PWD" "$WORK_DIR"
 cd "$WORK_DIR/$(basename "$PWD")"
-
 
 #### Step 2: actual work starts:
 bash benchmark/benchmark.sh > output.txt
@@ -40,4 +35,4 @@ done
 echo "TAGS_STRING: $TAGS_STRING"
 echo "FOLDER_STRING: $FOLDER_STRING"
 
-TAGS_STRING=$TAGS_STRING FOLDER_STRING=$FOLDER_STRING sbatch --dependency=afterany:$job_ids benchmark/post_github_comment.sbatch
+TAGS_STRING=$TAGS_STRING FOLDER_STRING=$FOLDER_STRING WORK_DIR=$WORK_DIR sbatch --dependency=afterany:$job_ids benchmark/post_github_comment.sbatch

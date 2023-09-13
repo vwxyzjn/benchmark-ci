@@ -2,13 +2,7 @@
 # this is necessary because another github action job will remove
 # the entire directory, which slurm depends on.
 # https://stackoverflow.com/questions/4632028/how-to-create-a-temporary-directory
-
-ls -la
-pwd
 WORK_DIR=$(mktemp -d)
-echo PWD: $PWD
-echo WORK_DIR: $WORK_DIR
-
 if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
   echo "Could not create temp dir"
   exit 1
@@ -18,12 +12,8 @@ function cleanup {
   echo "Deleted temp working directory $WORK_DIR"
 }
 trap cleanup EXIT
-cp -r "$PWD"/. "$WORK_DIR"
-cd $WORK_DIR
-
-ls -la
-pwd
-
+cp -r "$PWD" "$WORK_DIR"
+cd "$WORK_DIR/$(basename "$PWD")"
 
 
 #### Step 2: actual work starts:

@@ -4,10 +4,6 @@
 # https://stackoverflow.com/questions/4632028/how-to-create-a-temporary-directory
 # WORK_DIR=$(mktemp -d)
 WORKDIR=$PWD
-if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
-  echo "Could not create temp dir"
-  exit 1
-fi
 cp -r "$PWD" "$WORK_DIR"
 cd "$WORK_DIR/$(basename "$PWD")"
 

@@ -3,7 +3,7 @@
 # the entire directory, which slurm depends on.
 # https://stackoverflow.com/questions/4632028/how-to-create-a-temporary-directory
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-WORK_DIR=mktemp -d
+WORK_DIR=$(mktemp -d)
 if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
   echo "Could not create temp dir"
   exit 1

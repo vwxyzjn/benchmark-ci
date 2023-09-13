@@ -145,7 +145,9 @@ if __name__ == "__main__":
             save_code=True,
         )
     import tempfile
-    temp_dir = tempfile.TemporaryDirectory()
+    # temp_dir = tempfile.TemporaryDirectory()
+    temp_dir = tempfile.mkdtemp()
+    print(f"temp_dir={temp_dir.name}")
     writer = SummaryWriter(temp_dir)
     writer.add_text(
         "hyperparameters",
@@ -312,3 +314,5 @@ if __name__ == "__main__":
 
     envs.close()
     writer.close()
+    import shutil
+    shutil.rmtree(temp_dir)

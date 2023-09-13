@@ -145,9 +145,10 @@ if __name__ == "__main__":
             save_code=True,
         )
     import tempfile
-    # temp_dir = tempfile.TemporaryDirectory()
-    temp_dir = tempfile.mkdtemp()
+    temp_dir = tempfile.TemporaryDirectory()
     print(f"temp_dir={temp_dir.name}")
+    temp_dir = tempfile.mkdtemp()
+    print(f"temp_dir={temp_dir}")
     writer = SummaryWriter(temp_dir)
     writer.add_text(
         "hyperparameters",

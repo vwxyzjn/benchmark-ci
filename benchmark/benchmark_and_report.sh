@@ -6,6 +6,8 @@ WORK_DIR=$(mktemp -d)
 cp -r "$PWD" "$WORK_DIR"
 cd "$WORK_DIR/$(basename "$PWD")"
 
+echo WORK_DIR: $WORK_DIR
+
 #### Step 2: actual work starts:
 bash benchmark/benchmark.sh > output.txt
 
